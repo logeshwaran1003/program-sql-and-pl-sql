@@ -1,0 +1,109 @@
+--Write a PL/SQL program to arrange the number of two variable in such a way that the small 
+--number will store in C and large number will store in num_large variable.
+
+DECLARE
+       num_small  number;
+       num_large NUMBER ;
+BEGIN
+     num_small  := 10;
+     num_large  := 15;
+    DBMS_OUTPUT.PUT_LINE('smallest num  ' || num_small);
+    DBMS_OUTPUT.PUT_LINE('largest num  ' || num_large);
+END;
+
+DECLARE
+  num_small NUMBER := 10;
+  num_large NUMBER := 15;
+BEGIN
+  IF num_small > num_large THEN
+    num_small := num_large;
+  ELSE
+    num_small := num_small;
+  END IF;
+  DBMS_OUTPUT.PUT_LINE('smaller number  ' || num_small);
+  DBMS_OUTPUT.PUT_LINE('larger number  ' || num_large);
+END;
+
+
+--Write a PL/SQL program to check whether a given character is letter or digit.
+DECLARE
+    N_VALUE NUMBER := '9';
+BEGIN
+   IF N_VALUE >= '0' and n_value <= '9' THEN
+    DBMS_OUTPUT.PUT_LINE(N_VALUE || 'IS NUMBER '  );
+   ELSIF N_VALUE >='A' AND N_VALUE <='Z' THEN
+    DBMS_OUTPUT.PUT_LINE(N_VALUE || 'IS character ');
+   ELSE
+    DBMS_OUTPUT.PUT_LINE('INVALID'); 
+    END IF;
+END;
+
+--Write a program in PL/SQL to print the value of a variable inside and outside a loop using LOOP WHEN EXIT statement.
+DECLARE
+  l_counter NUMBER := 0;
+BEGIN
+  LOOP
+    l_counter := l_counter + 1;
+    EXIT WHEN l_counter > 3;
+    dbms_output.put_line( 'Inside loop: ' || l_counter )  ;
+  END LOOP;
+  dbms_output.put_line( 'outside loop: ' || l_counter );
+END;
+
+--Write a PL/SQL program to display which day is a specific date(doubt)
+DECLARE 
+   l_date DATE := sysdate;
+BEGIN
+   dbms_output.put_line( 'day =' || to_char(date sysdate);
+END;
+
+--Write a PL/SQL procedure to calculate the incentive on a specific target otherwise a general incentive to be
+--paid using IF-THEN-ELSE. (doubt)
+DECLARE
+   incentive number(8,2);
+   salary number :=10000;
+BEGIN 
+    if salary > 1000 then
+    incentive := salary * 0.1;
+    else
+    incentive := salary * 0.2;
+    end if;
+DBMS_OUTPUT.PUT_LINE('Incentive  = ' || incentive);    
+end;
+
+--Write a PL/SQL block to calculate the incentive of an employee whose ID is 110
+DECLARE
+  incentive   NUMBER(8,2);
+BEGIN
+  SELECT salary * 0.12 INTO incentive
+  FROM employees_2610
+  WHERE employee_id = 100;
+DBMS_OUTPUT.PUT_LINE('Incentive  = ' || incentive);
+END;
+--Write a block to display name, contact no and no of rows from employee table.
+declare 
+    l_display_name employees_2610.first_name%type;
+    l_contact_no employees_2610.phone_number%type;
+begin 
+  select 
+    first_name, phone_number
+  into
+    l_display_name, l_contact_no
+  from 
+    employees_2610
+    where employee_id = 101;
+  DBMS_OUTPUT.PUT_LINE('display_name' || l_display_name);
+  DBMS_OUTPUT.PUT_LINE('contact_no' || l_contact_no);
+END;
+
+--To develop a procedure named adjust_salary() sample database.
+--We’ll update the salary information of employees in the employees table by 
+--using SQL UPDATE statement.
+declare
+    adjust_salary number;
+begin 
+     select salary * 0.5 into adjust_salary
+     from employees_2610
+     where employee_id = 100;
+dbms_output.put_line('adjusted salary  ' || adjust_salary);
+end;
