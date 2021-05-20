@@ -1,0 +1,92 @@
+--1. BANKING MANAGEMENT SYSTEM. Write a PL/SQL block to CONVERT THE SALARY ACCOUNT TYPE TO 
+--SAVINGS ACCOUNT FOR THE GIVEN CUSTOMER ID.
+BEGIN
+    UPDATE ACCOUNT_INFO_2605
+    SET ACCOUNT_TYPE = 'savings'
+    WHERE CUSTOMER_ID = 'C-002';
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('RECORD UPDATED');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('RECORD NOT FOUND');
+    END IF;
+END;
+--2. BMS - TO CHANGE THE IFSC OF  ICICI OF TNAGAR
+BEGIN
+    UPDATE ACCOUNT_INFO_2605
+    SET IFSC_CODE = 'ICITN0231'
+    WHERE CUSTOMER_ID = 'C-003';
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('RECORD UPDATED');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('RECORD NOT FOUND');
+    END IF;
+END;
+
+--3. WRITE A BLOCK TO LIST THE SENIOR CITIZEN - ACCOUNT HOLDERS
+DECLARE
+  l_customer_name customer_PERSONAL_INFO_2605.CUSTOMER_name%TYPE;
+  l_date_of_birth customer_PERSONAL_INFO_2605.date_of_birth%TYPE;
+BEGIN
+  SELECT
+    CUSTOMER_name, date_of_birth
+  INTO
+    l_customer_name, l_date_of_birth
+  FROM
+    customer_PERSONAL_INFO_2605
+  WHERE
+    TO_CHAR(DATE_OF_BIRTH,'YYYY')<1984;
+  DBMS_OUTPUT.PUT_LINE('senior citizen');
+END;
+
+--4.WRITE A BLOCK TO CHANGE THE ACCOUNT HOLDERS BRANCH.(INCLUDING IFSC) FOR THE GIVEN ACCOUNT HOLDER
+begin
+   update account_info_2605
+   set ifsc_code = 'ICITN0231'
+   where customer_id = 'C-002';
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('RECORD UPDATED');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('RECORD NOT FOUND');
+    END IF;
+END;
+
+--5. DISPLAY THE NAME OF THE EMPLOYEES AND THE NUMBER OF RECORDS USING CURSOR AND CURSOR LOOP   
+
+DECLARE
+    CURSOR C IS 
+        SELECT FIRST_NAME 
+        FROM EMPLOYEES_2610;
+    V_NAME EMPLOYEES_2610.FIRST_NAME%TYPE;
+BEGIN
+    OPEN C;
+    LOOP
+        FETCH C INTO V_NAME;
+        EXIT WHEN C%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(V_NAME||' '||'FOUND');
+    END LOOP;
+    CLOSE C;
+END;
+SELECT * FROM EMPLOYEES_2610;
+
+--6. Write a procedure to increase the salary of all the employees by 5000 using FORALL.
+select * from employees_2610;
+CREATE OR REPLACE PROCEDURE print_contact(
+    in_salary employees_2610.salary%TYPE  
+)
+IS
+  r_contact employees_2610%ROWTYPE;
+BEGIN
+  -- get contact based on customer id
+  SELECT *
+  INTO r_contact
+  FROM employees_2610
+  WHERE salary = IN_salary;
+
+  -- print out contact's information
+  dbms_output.put_line( r_contact.salary || ' ' ||
+  (r_contact.salary + 5000));
+
+EXCEPTION
+   WHEN OTHERS THEN
+      dbms_output.put_line( SQLERRM );
+END;
